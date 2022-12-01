@@ -8,11 +8,14 @@ namespace _Project.Codebase
         public float width;
         public float height;
 
+        public float WidthExtents => width / 2f;
+        public float HeightExtents => height / 2f;
+
         [SerializeField] private SpriteRenderer _spriteRenderer;
         private void Update()
         {
             if (_spriteRenderer != null)
-                _spriteRenderer.transform.localScale = new Vector3(width, height);
+                _spriteRenderer.size = new Vector2(width, height);
         }
     }
 }

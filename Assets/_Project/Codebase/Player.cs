@@ -8,6 +8,11 @@ namespace _Project.Codebase
         private void Update()
         {
             _gun.targetPos = Utils.WorldMousePos;
+
+            if (GameControls.Fire.IsPressed)
+            {
+                _gun.Fire();
+            }
         }
     }
 }
