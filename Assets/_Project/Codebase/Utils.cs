@@ -1172,6 +1172,9 @@ namespace _Project.Codebase
             float m = Mathf.Clamp01(aDrag * Time.fixedDeltaTime);
             return aFinalSpeed * m / (1 - m);
         }
+
+        public static Vector2 GetCollisionPos(this RaycastHit2D hit, float radius) =>
+            hit.point + hit.normal * radius;
     }
 
     public enum TextMod

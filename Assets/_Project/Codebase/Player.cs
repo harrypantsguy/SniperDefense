@@ -1,18 +1,26 @@
-﻿using UnityEngine;
-
+﻿
 namespace _Project.Codebase
 {
     public class Player : MonoSingleton<Player>
     {
-        [SerializeField] private Gun _gun;
+        public Gun gun;
+        public bool fullAuto;
         private void Update()
         {
-            _gun.targetPos = Utils.WorldMousePos;
+            if (GameControls.DecreaseGameSpeed.IsPressed)
+                TimeController.TimeScale -= .125f;
+            if (GameControls.IncreaseGameSpeed.IsPressed)
+                TimeController.TimeScale += .125f;
+            
+            gun.targetPos = Utils.WorldMousePos;
 
-            if (GameControls.Fire.IsPressed)
+            if (GameControls.Fire.IsPressed && !fullAuto || GameControls.Fire.IsHeld && fullAuto)
             {
-                _gun.Fire();
+                gun.Fire();
             }
+            
+            if (GameControls.Reload.IsPressed)
+                gun.StartReload();
         }
     }
 }

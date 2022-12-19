@@ -10,7 +10,9 @@ namespace _Project.Codebase
         public static readonly KeyBind Left = new KeyBind(KeyCode.A);
         public static readonly KeyBind Right = new KeyBind(KeyCode.D);
         public static readonly KeyBind Fire = new KeyBind(KeyCode.Mouse0);
-        
+        public static readonly KeyBind FastCam = new KeyBind(KeyCode.LeftShift);
+        public static readonly KeyBind ChangeFireMode = new KeyBind(KeyCode.C);
+        public static readonly KeyBind Reload = new KeyBind(KeyCode.R);
         
         public static readonly KeyBind IncreaseGameSpeed = new KeyBind(KeyCode.RightBracket);
         public static readonly KeyBind DecreaseGameSpeed = new KeyBind(KeyCode.LeftBracket);
