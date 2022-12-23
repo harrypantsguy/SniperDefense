@@ -13,7 +13,14 @@ namespace _Project.Codebase
         public static readonly KeyBind FastCam = new KeyBind(KeyCode.LeftShift);
         public static readonly KeyBind ChangeFireMode = new KeyBind(KeyCode.C);
         public static readonly KeyBind Reload = new KeyBind(KeyCode.R);
+        public static readonly KeyBind SetMoveModeToCharacter = new KeyBind(KeyCode.LeftShift);
         
+        public static readonly KeyBind MoveMiniMap = new KeyBind(KeyCode.Mouse0);
+        public static readonly KeyBind MoveCameraToMiniMapLocation = new KeyBind(KeyCode.Mouse1);
+        public static readonly KeyBind MinimapZoomIn = new KeyBind(KeyCode.Comma);
+        public static readonly KeyBind MinimapZoomOut = new KeyBind(KeyCode.Period);
+        public static readonly KeyBind CenterMap = new KeyBind(KeyCode.C);
+
         public static readonly KeyBind IncreaseGameSpeed = new KeyBind(KeyCode.RightBracket);
         public static readonly KeyBind DecreaseGameSpeed = new KeyBind(KeyCode.LeftBracket);
 

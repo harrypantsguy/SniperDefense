@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace _Project.Codebase
 {
-    [ExecuteAlways]
     public class World : MonoSingleton<World>
     {
         public float width;
@@ -14,6 +13,11 @@ namespace _Project.Codebase
 
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
+        private void OnValidate()
+        {
+            UpdateSpriteRenderer();
+        }
+
         private void Start()
         {
             if (Application.isPlaying)
@@ -21,6 +25,11 @@ namespace _Project.Codebase
         }
 
         private void Update()
+        {
+            UpdateSpriteRenderer();
+        }
+
+        private void UpdateSpriteRenderer()
         {
             if (_spriteRenderer != null)
                 _spriteRenderer.size = new Vector2(width, height);

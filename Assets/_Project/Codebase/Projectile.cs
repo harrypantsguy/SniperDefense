@@ -6,7 +6,7 @@ namespace _Project.Codebase
     public class Projectile : MonoBehaviour
     {
         [HideInInspector] public Vector2 velocity;
-        public int damage;
+        public float damage;
         public float radius;
         public float speed;
         public float range;
@@ -43,7 +43,13 @@ namespace _Project.Codebase
             {
                 if (hit.collider.TryGetComponent(out IDamageable damageable))
                 {
-                    damageable.TakeDamage(damage);
+                    DamageReport report = new DamageReport
+                    {
+                        damage = (int)damage,
+                        direction = displacement.normalized,
+                        impactLocation = hit.point
+                    };
+                    damageable.TakeDamage(report);
                 }
                 hitColliders.Add(hit.collider);
                 

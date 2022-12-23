@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using _Project.Codebase.UI;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace _Project.Codebase
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : MonoSingleton<CameraController>
     {
         [SerializeField] private Vector2 _worldRangeExtension;
-        private Camera _camera;
+        public Camera Camera { get; private set; }
         private World _world;
 
+        public Vector2 moveInput;
+        
         private Vector3 _desiredPosition;
         private float _desiredZoom;
 
@@ -19,22 +23,26 @@ namespace _Project.Codebase
         private const float MAX_ZOOM = 25f;
         private const float MIN_ZOOM = 2f;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            Camera = GetComponent<Camera>();
+        }
+
         private void Start()
         {
-            _camera = GetComponent<Camera>();
             _desiredPosition = transform.position;
-            _desiredZoom = _camera.orthographicSize;
+            _desiredZoom = Camera.orthographicSize;
 
             _world = World.Singleton;
         }
 
         private void Update()
         {
-            Vector2 cameraSize = new Vector2(_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
-            Vector2 inputs = GameControls.DirectionalInput;
+            Vector2 cameraSize = new Vector2(Camera.orthographicSize * Camera.aspect, Camera.orthographicSize);
             float speed = (DEFAULT_MOVE_SPEED * (GameControls.FastCam.IsHeld ? FAST_CAM_MULTIPLIER : 1f));
-            Vector3 moveVector = new Vector3(inputs.x * speed * Time.unscaledDeltaTime, 
-                inputs.y * speed * Time.unscaledDeltaTime);
+            Vector3 moveVector = new Vector3(moveInput.x * speed * Time.unscaledDeltaTime, 
+                moveInput.y * speed * Time.unscaledDeltaTime);
             _desiredPosition += moveVector;
 
             float minX = -_world.WidthExtents - _worldRangeExtension.x;
@@ -52,14 +60,20 @@ namespace _Project.Codebase
             
             transform.position = Vector3.Lerp(transform.position, _desiredPosition, LERP_SPEED * Time.unscaledDeltaTime);
             
-            _desiredZoom += -Input.mouseScrollDelta.y * ZOOM_CHANGE_SPEED;
+            if (!CustomUI.MouseOverUI)
+                _desiredZoom += -Input.mouseScrollDelta.y * ZOOM_CHANGE_SPEED;
             float verticalRange = (maxY - minY) / 2f;
             float horizontalRange = (maxX - minX) / 2f;
             _desiredZoom = Mathf.Clamp(_desiredZoom, 
                 MIN_ZOOM, Mathf.Min
             (MAX_ZOOM,verticalRange));
-            _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _desiredZoom, 
+            Camera.orthographicSize = Mathf.Lerp(Camera.orthographicSize, _desiredZoom, 
                 ZOOM_LERP_SPEED * Time.unscaledDeltaTime);
+        }
+
+        public void ForceSetCameraTargetPos(Vector2 target)
+        {
+            _desiredPosition = target.SetZ(_desiredPosition.z);
         }
     }
 }

@@ -4,6 +4,6 @@
     {
         public int MaxHealth { get; set; }
         public int Health { get; set; }
-        public void TakeDamage(float damage);
+        public void TakeDamage(DamageReport damageReport);
     }
 }

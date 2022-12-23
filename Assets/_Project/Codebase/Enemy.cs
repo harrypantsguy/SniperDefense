@@ -1,4 +1,6 @@
-﻿using _Project.Codebase.UI;
+﻿using System;
+using System.Collections.Generic;
+using _Project.Codebase.UI;
 using UnityEngine;
 
 namespace _Project.Codebase
@@ -8,9 +10,15 @@ namespace _Project.Codebase
         [SerializeField] private FillableBarUI _healthBar;
         private int _health;
 
+        public static readonly List<Enemy> enemies = new List<Enemy>();
+        public static Action<Enemy> NewEnemyEvent;
+        public static Action<Enemy> RemoveEnemyEvent;
+        
         private void Start()
         {
             _health = MaxHealth;
+            enemies.Add(this);
+            NewEnemyEvent.Invoke(this);
         }
 
         private void Update()
@@ -30,11 +38,14 @@ namespace _Project.Codebase
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(DamageReport damageReport)
         {
-            Health -= (int)damage;
+            int damage = damageReport.damage;
+            Health -= damage;
             Health = Mathf.Max(Health, 0);
 
+            FlyingText.SpawnFlyingText(damage.ToString(), damageReport.impactLocation, damageReport.direction, false);
+            
             if (Health == 0)
             {
                 Die();
@@ -44,6 +55,8 @@ namespace _Project.Codebase
         private void Die()
         {
             Destroy(gameObject);
+            enemies.Remove(this);
+            RemoveEnemyEvent.Invoke(this);
         }
     }
 }

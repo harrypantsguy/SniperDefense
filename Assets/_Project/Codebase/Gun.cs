@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace _Project.Codebase
@@ -99,7 +98,9 @@ namespace _Project.Codebase
             
             bulletsInMag--;
             _lastFireTime = Time.time;
-            Projectile.FireProjectile(_projectileFab, _projectileSource.position, _projectileSource.right);
+            Projectile projectile = Projectile.FireProjectile(_projectileFab, _projectileSource.position, _projectileSource
+            .right);
+            projectile.damage = damage;
         }
     }
 }

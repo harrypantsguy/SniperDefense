@@ -866,6 +866,7 @@ namespace _Project.Codebase
         public static Vector3 SetX(this Vector3 v, float newX) => new Vector3(newX, v.y, v.z);
         public static Vector3 SetY(this Vector3 v, float newY) => new Vector3(v.x, newY, v.z);
         public static Vector3 SetZ(this Vector3 v, float newZ) => new Vector3(v.x, v.y, newZ);
+        public static Vector3 SetZ(this Vector2 v, float newZ) => new Vector3(v.x, v.y, newZ);
         public static Vector3Int ToInt(this Vector3 v) => new Vector3Int((int)v.x, (int)v.y, (int)v.z);
         public static Vector2Int ToInt(this Vector2 v) => new Vector2Int((int)v.x, (int)v.y);
         public static Vector2 SetX(this Vector2 v, float newX) => new Vector2(newX, v.y);
