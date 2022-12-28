@@ -10,7 +10,7 @@ namespace _Project.Codebase.UI
         {
             _rectTransform = GetComponent<RectTransform>();
             
-            Material material = new Material("");
+            //Material material = new Material("");
         }
     }
 

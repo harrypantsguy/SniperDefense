@@ -1,7 +1,5 @@
 ﻿using _Project.Codebase.UI;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-
 namespace _Project.Codebase
 {
     public class CameraController : MonoSingleton<CameraController>
@@ -74,6 +72,30 @@ namespace _Project.Codebase
         public void ForceSetCameraTargetPos(Vector2 target)
         {
             _desiredPosition = target.SetZ(_desiredPosition.z);
+        }
+
+        public bool IsPointOnScreen(Vector2 point, bool isWorldSpacePoint)
+        {
+            Vector2 screenPoint = isWorldSpacePoint ? Utils.WorldtoScreenPoint(point) : point;
+            return screenPoint.x >= 0f && screenPoint.x <= Screen.width && screenPoint.y >= 0f && screenPoint.y
+                <= Screen.height;
+        }
+        
+        public bool IsRectOnScreen(Vector2 position, Vector2 size, bool isWorldSpace)
+        {
+            Vector2 screenPosition = isWorldSpace ? Utils.WorldtoScreenPoint(position) : position;
+            Camera cam = Camera.main;
+            Vector2 screenSize = isWorldSpace
+                ? new Vector2( Screen.width * size.x / (cam.aspect * cam.orthographicSize * 2f), Screen.height * size.y /
+                                                                                                (cam.orthographicSize * 2f))
+                : size;
+
+            Rect rect = new Rect(Vector2.zero, screenSize);
+            rect.center = screenPosition;
+            Rect screenRect = new Rect(Vector2.zero, 
+                new Vector2(Screen.width, Screen.height));
+            
+            return rect.Overlaps(screenRect);
         }
     }
 }

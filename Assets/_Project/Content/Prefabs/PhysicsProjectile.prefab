@@ -180,7 +180,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   damage: 10
   radius: 0.1
-  speed: 1500
+  speed: 300
   range: 200
   penetration: 1
   _trail: {fileID: 7012855818380272627}

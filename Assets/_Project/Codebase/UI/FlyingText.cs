@@ -57,7 +57,7 @@ namespace _Project.Codebase.UI
             {
                 _textSize = _sizeCurve.Evaluate(t / LIFETIME) * _defaultTextSize;
                 UpdateRectTransform();
-                float exponentComp = 1f - Mathf.Exp(-t / (LIFETIME / 6f));
+                float exponentComp = 1f - Mathf.Exp(-t / (LIFETIME / 8f));
                 transform.position = Vector3.Lerp(_startPosition, _finalPosition, exponentComp);
                 if (t > FADE_OUT_START_TIME)
                 {

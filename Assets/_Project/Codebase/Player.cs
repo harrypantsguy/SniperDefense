@@ -1,6 +1,4 @@
-﻿
-using System;
-using _Project.Codebase.UI;
+﻿using _Project.Codebase.UI;
 using UnityEngine;
 
 namespace _Project.Codebase

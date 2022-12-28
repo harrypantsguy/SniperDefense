@@ -1,19 +1,22 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
-[InitializeOnLoadAttribute]
-public static class ForceBootstrap
+namespace _Project.Codebase
 {
-    static ForceBootstrap()
+    [InitializeOnLoad]
+    public static class ForceBootstrap
     {
-        EditorApplication.playModeStateChanged += ForceLoadBootstrap;
-    }
+        static ForceBootstrap()
+        {
+            EditorApplication.playModeStateChanged += ForceLoadBootstrap;
+        }
 
-    private static void ForceLoadBootstrap(PlayModeStateChange state)
-    {
-        if (state == PlayModeStateChange.EnteredPlayMode)
-            SceneManager.LoadScene(0);
+        private static void ForceLoadBootstrap(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.EnteredPlayMode)
+                SceneManager.LoadScene(0);
+        }
     }
 }
 #endif

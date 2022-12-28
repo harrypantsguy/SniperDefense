@@ -1176,6 +1176,8 @@ namespace _Project.Codebase
 
         public static Vector2 GetCollisionPos(this RaycastHit2D hit, float radius) =>
             hit.point + hit.normal * radius;
+        
+        public static Vector2 ScreenCenter => new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 
     public enum TextMod

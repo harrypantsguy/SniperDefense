@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project.Codebase
 {
@@ -31,8 +30,9 @@ namespace _Project.Codebase
 
         private void UpdateSpriteRenderer()
         {
-            if (_spriteRenderer != null)
-                _spriteRenderer.size = new Vector2(width, height);
+            Vector2 size = new Vector2(width, height);
+            if (_spriteRenderer != null && _spriteRenderer.size != size)
+                _spriteRenderer.size = size;
         }
     }
 }

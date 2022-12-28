@@ -13,12 +13,15 @@ namespace _Project.Codebase
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] public Transform _projectileSource;
         public Vector2 targetPos;
+        public Vector2 AimDir { get; private set; }
         public GameObject _projectileFab;
         [HideInInspector] public int bulletsInMag;
         public bool reloading;
         public bool inFireDelay;
         public float ReloadProgress { get; private set; }
         public float FireDelayProgress { get; private set; }
+
+        public Vector2 TargetPosAtRange => (Vector2)_projectileSource.position + AimDir * range;
 
         private float _reloadStartTime;
         private float _lastFireTime;
@@ -34,7 +37,8 @@ namespace _Project.Codebase
 
         private void Update()
         {
-            transform.right = (targetPos - (Vector2)transform.position).normalized;
+            AimDir = (targetPos - (Vector2)_projectileSource.position).normalized;
+            transform.right = AimDir;
             _lineRenderer.positionCount = 2;
             _lineRenderer.SetPositions(new Vector3[]{_projectileSource.position, (Vector2)_projectileSource.position
                                                                         + (Vector2)transform.right * range});

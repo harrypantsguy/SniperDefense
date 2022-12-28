@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using _Project.Codebase.UI;
 using UnityEngine;
 
-namespace _Project.Codebase
+namespace _Project.Codebase.Enemies
 {
-    public class Enemy : MonoBehaviour, IDamageable
+    public class Enemy : Entity, IDamageable
     {
         [SerializeField] private FillableBarUI _healthBar;
         private int _health;
@@ -13,17 +13,12 @@ namespace _Project.Codebase
         public static readonly List<Enemy> enemies = new List<Enemy>();
         public static Action<Enemy> NewEnemyEvent;
         public static Action<Enemy> RemoveEnemyEvent;
-        
-        private void Start()
+
+        protected virtual void Start()
         {
             _health = MaxHealth;
             enemies.Add(this);
             NewEnemyEvent.Invoke(this);
-        }
-
-        private void Update()
-        {
-            transform.position -= new Vector3(5f * Time.deltaTime, 0f, 0f);
         }
 
         public int MaxHealth { get; set; } = 25;
@@ -52,7 +47,7 @@ namespace _Project.Codebase
             }
         }
 
-        private void Die()
+        protected virtual void Die()
         {
             Destroy(gameObject);
             enemies.Remove(this);

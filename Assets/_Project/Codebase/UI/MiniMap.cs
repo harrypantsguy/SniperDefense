@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Project.Codebase.Enemies;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ namespace _Project.Codebase.UI
     {
         [SerializeField] private Image _groundImage;
         [SerializeField] private Image _cameraBoundsImage;
+        [SerializeField] private UILineRenderer _aimDirectionLine;
         [SerializeField] private GameObject _enemyIconPrefab;
         
         public float scaleFactor;
@@ -90,8 +92,9 @@ namespace _Project.Codebase.UI
 
             Matrix4x4 cameraTranslate = transformationMatrix * _camera.transform.localToWorldMatrix;
             _cameraBoundsImage.rectTransform.position = cameraTranslate.GetPosition();
-            _cameraBoundsImage.rectTransform.sizeDelta = new Vector2(cameraTranslate.lossyScale.x * _camera
-            .orthographicSize * _camera.aspect * 2f, cameraTranslate.lossyScale.y * _camera.orthographicSize * 2f);
+            _cameraBoundsImage.rectTransform.sizeDelta = new Vector2(cameraTranslate.lossyScale.x * 
+                                                                     _camera.orthographicSize * _camera.aspect * 2f,
+                cameraTranslate.lossyScale.y * _camera.orthographicSize * 2f);
 
             if (GameControls.MoveCameraToMiniMapLocation.IsPressed && MouseInside)
             {
@@ -110,6 +113,19 @@ namespace _Project.Codebase.UI
                 CameraController.Singleton.ForceSetCameraTargetPos(worldMousePosOnMinimap);
             }
 
+            if (_aimDirectionLine != null)
+            {
+                Vector2 minimapPlayerPos = (transformationMatrix * Player.Singleton.transform.localToWorldMatrix).GetPosition();
+                Vector2 targetPos = Player.Singleton.gun.TargetPosAtRange;
+                Vector2 minimapRangeEnd = transformationMatrix.MultiplyPoint(targetPos);
+                _aimDirectionLine.points = new List<Vector2>
+                {
+                    minimapPlayerPos,
+                    minimapRangeEnd
+                };
+                _aimDirectionLine.UpdateGraphic();
+            }
+
             foreach ((Transform iconTransform, MiniMapIcon icon) in _icons)
             {
                 icon.UpdateIcon(transformationMatrix, globalIconScaleFactor);
@@ -119,7 +135,7 @@ namespace _Project.Codebase.UI
         public void CenterMap()
         {
             scaleFactor = PerfectFitScaleFactor;
-            _miniMapOffset.y = -rectTransform.sizeDelta.y / 2f;
+            _miniMapOffset.y = 0f;//-rectTransform.sizeDelta.y / 2f;
             _miniMapOffset.x = 0f;
             UpdateGroundImage();
         }
