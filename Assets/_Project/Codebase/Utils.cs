@@ -869,6 +869,7 @@ namespace _Project.Codebase
         public static Vector3 SetZ(this Vector2 v, float newZ) => new Vector3(v.x, v.y, newZ);
         public static Vector3Int ToInt(this Vector3 v) => new Vector3Int((int)v.x, (int)v.y, (int)v.z);
         public static Vector2Int ToInt(this Vector2 v) => new Vector2Int((int)v.x, (int)v.y);
+        public static Vector2 Floor(this Vector2 v) => new Vector2(Mathf.FloorToInt(v.x), Mathf.FloorToInt(v.x));
         public static Vector2 SetX(this Vector2 v, float newX) => new Vector2(newX, v.y);
         public static Vector2 SetY(this Vector2 v, float newY) => new Vector2(v.x, newY);
 
@@ -881,10 +882,7 @@ namespace _Project.Codebase
             PointInsideRect(ScreenDims, ScreenDims/2f, pos);
 
         public static bool MouseInWindow() => ScreenContainsScreenPoint(Input.mousePosition);
-
-        public static Vector2Int FloorVector(this Vector2 vector) => new Vector2Int(Mathf.FloorToInt(vector.x),
-            Mathf.FloorToInt(vector.y));
-
+        
         public static bool IsOfEnumType<T>(this T enumerable, params T[] types) where T : Enum
         {
             foreach (T type in types)

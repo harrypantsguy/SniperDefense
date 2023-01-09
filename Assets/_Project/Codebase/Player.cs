@@ -17,8 +17,8 @@ namespace _Project.Codebase
                 TimeController.TimeScale -= .125f;
             if (GameControls.IncreaseGameSpeed.IsPressed)
                 TimeController.TimeScale += .125f;
-            
-            gun.targetPos = Utils.WorldMousePos;
+
+            gun.targetPos = CameraController.Singleton.WorldMousePos;
             
             if ((GameControls.Fire.IsPressed && !fullAuto || GameControls.Fire.IsHeld && fullAuto) && !CustomUI.MouseOverUI)
             {
@@ -36,10 +36,12 @@ namespace _Project.Codebase
                 transform.position = transform.position.SetY(Mathf.Clamp(transform.position.y, -World.Singleton
                     .HeightExtents, World.Singleton.HeightExtents));
             }
+            
+            transform.position = transform.position.SetX(-(World.Singleton.WidthExtents + 1f));
 
             Vector2 moveInput = GameControls.DirectionalInput;
             moveInput = moveInput.SetY(movingCharacter ? 0f : moveInput.y);
-            CameraController.Singleton.moveInput = moveInput;
+            CameraController.Singleton.moveInput = moveInput.normalized;
             
             MouseDelta = (Vector2)Input.mousePosition - _oldMousePos;
         }

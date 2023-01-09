@@ -17,12 +17,6 @@ namespace _Project.Codebase
             UpdateSpriteRenderer();
         }
 
-        private void Start()
-        {
-            if (Application.isPlaying)
-                Player.Singleton.transform.position = new Vector3(-(WidthExtents + 1f), 0f, 0f);
-        }
-
         private void Update()
         {
             UpdateSpriteRenderer();
