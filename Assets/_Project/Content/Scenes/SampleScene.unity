@@ -1029,11 +1029,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d418671979a4dc59174ffff7efe21e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  fireDelay: 0.125
+  damage: 8
+  fireDelay: 0.2
   range: 150
-  magSize: 8
-  reloadTime: 1
+  magSize: 10
+  reloadTime: 0.5
   _lineRenderer: {fileID: 1524850893}
   _projectileSource: {fileID: 1524850892}
   targetPos: {x: 0, y: 0}
@@ -2077,7 +2077,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1891776486}
   - component: {fileID: 1891776487}
-  - component: {fileID: 1891776488}
   m_Layer: 5
   m_Name: MiniMap
   m_TagString: Untagged
@@ -2124,20 +2123,6 @@ MonoBehaviour:
   _enemyIconPrefab: {fileID: 1335380048207818267, guid: fcab2f8d022edc2409f384675cc1995e, type: 3}
   scaleFactor: 10
   globalIconScaleFactor: 1
---- !u!114 &1891776488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891776485}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding: {x: 0, y: 0, z: 0, w: 0}
-  m_Softness: {x: 0, y: 0}
 --- !u!1 &1896622467
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ namespace _Project.Codebase
         public bool fullAuto;
 
         public Vector2 MouseDelta { get; private set; }
+        private bool _pressedFireNotOverUI;
 
         private Vector2 _oldMousePos;
         private void Update()
@@ -19,8 +20,15 @@ namespace _Project.Codebase
                 TimeController.TimeScale += .125f;
 
             gun.targetPos = CameraController.Singleton.WorldMousePos;
+
+            if (!CustomUI.MouseOverUI && GameControls.Fire.IsPressed)
+            {
+                _pressedFireNotOverUI = true;
+            }
+            else if (!GameControls.Fire.IsHeld)
+                _pressedFireNotOverUI = false;
             
-            if ((GameControls.Fire.IsPressed && !fullAuto || GameControls.Fire.IsHeld && fullAuto) && !CustomUI.MouseOverUI)
+            if (GameControls.Fire.IsPressed && !fullAuto && !CustomUI.MouseOverUI || GameControls.Fire.IsHeld && fullAuto && _pressedFireNotOverUI)
             {
                 gun.Fire();
             }

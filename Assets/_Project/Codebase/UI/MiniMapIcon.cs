@@ -13,7 +13,7 @@ namespace _Project.Codebase.UI
         {
             Matrix4x4 translate = miniMapMatrix * targetTransform.localToWorldMatrix;
             _image.transform.position = translate.GetPosition();
-            _image.rectTransform.localScale = translate.lossyScale * (scale * sizeMultiplier);
+            _image.rectTransform.localScale = translate.lossyScale * (scale * sizeMultiplier) / _image.canvas.scaleFactor;
         }
     }
 }

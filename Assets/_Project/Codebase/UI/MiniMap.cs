@@ -64,8 +64,11 @@ namespace _Project.Codebase.UI
             if (_dragging)
                 _miniMapOffset += Player.Singleton.MouseDelta;
 
+            float canvasScaleFactor = _groundImage.canvas.scaleFactor;
+            
             Matrix4x4 transformationMatrix = Matrix4x4.TRS(_groundImage.rectTransform.position,
-                Quaternion.identity, new Vector3(scaleFactor, scaleFactor, 1f));
+                Quaternion.identity, new Vector3(scaleFactor * canvasScaleFactor, 
+                    scaleFactor * canvasScaleFactor, 1f));
 
             float scrollDelta = Input.mouseScrollDelta.y;
             float newScaleFactor = scaleFactor;
@@ -91,10 +94,11 @@ namespace _Project.Codebase.UI
             UpdateGroundImage();
 
             Matrix4x4 cameraTranslate = transformationMatrix * _camera.transform.localToWorldMatrix;
+            
             _cameraBoundsImage.rectTransform.position = cameraTranslate.GetPosition();
             _cameraBoundsImage.rectTransform.sizeDelta = new Vector2(cameraTranslate.lossyScale.x * 
-                                                                     _camera.orthographicSize * _camera.aspect * 2f,
-                cameraTranslate.lossyScale.y * _camera.orthographicSize * 2f);
+                                                                     _camera.orthographicSize * _camera.aspect * 2f / canvasScaleFactor,
+                cameraTranslate.lossyScale.y * _camera.orthographicSize * 2f / canvasScaleFactor);
 
             if (GameControls.MoveCameraToMiniMapLocation.IsPressed && MouseInside)
             {
@@ -120,8 +124,8 @@ namespace _Project.Codebase.UI
                 Vector2 minimapRangeEnd = transformationMatrix.MultiplyPoint(targetPos);
                 _aimDirectionLine.points = new List<Vector2>
                 {
-                    minimapPlayerPos,
-                    minimapRangeEnd
+                    minimapPlayerPos * canvasScaleFactor,
+                    minimapRangeEnd * canvasScaleFactor
                 };
                 _aimDirectionLine.UpdateGraphic();
             }

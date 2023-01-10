@@ -38,7 +38,7 @@ namespace _Project.Codebase
         private void Update()
         {
             AimDir = (targetPos - (Vector2)_projectileSource.position).normalized;
-            transform.right = AimDir;
+            transform.eulerAngles = new Vector3(0f, 0f, Utils.DirectionToAngle(AimDir));
             _lineRenderer.positionCount = 2;
             _lineRenderer.SetPositions(new Vector3[]{_projectileSource.position, (Vector2)_projectileSource.position
                                                                         + (Vector2)transform.right * range});
